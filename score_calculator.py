@@ -3,7 +3,7 @@ def calculate_score(skills, text):
     score = 0
 
     # Skill weight
-    score += min(len(skills) * 10, 40)
+    score += min(len(skills) * 8, 40)
 
     # Resume length
     word_count = len(text.split())
@@ -13,7 +13,7 @@ def calculate_score(skills, text):
     elif word_count > 150:
         score += 10
 
-    # Keywords boost
+    # Important keywords
     important = ["project", "experience", "internship"]
     for word in important:
         if word in text.lower():

@@ -6,16 +6,11 @@ from score_calculator import calculate_score
 from jd_matcher import match_resume_to_jd
 from suggestions import get_suggestions
 
-# -------------------------------
-# PAGE CONFIG
-# -------------------------------
 st.set_page_config(page_title="AI Hiring Platform", layout="wide")
 
 st.title("🚀 AI-Powered Hiring Intelligence Platform")
 
-# -------------------------------
-# INPUTS (WITH UNIQUE KEYS)
-# -------------------------------
+# INPUTS
 uploaded_files = st.file_uploader(
     "📄 Upload Multiple Resumes",
     type=["pdf"],
@@ -28,9 +23,6 @@ jd_text = st.text_area(
     key="jd_input"
 )
 
-# -------------------------------
-# MAIN LOGIC
-# -------------------------------
 if uploaded_files:
 
     candidates = []
@@ -57,37 +49,30 @@ if uploaded_files:
             "suggestions": get_suggestions(skills, text)
         })
 
-    # -------------------------------
-    # SMART FINAL SCORE
-    # -------------------------------
+    # FINAL SCORE
     for c in candidates:
-        c["final_score"] = int(0.7 * c["match"] + 0.3 * c["score"])
+        c["final_score"] = int(0.6 * c["match"] + 0.4 * c["score"])
 
-    # -------------------------------
-    # SORT BY FINAL SCORE
-    # -------------------------------
     candidates = sorted(candidates, key=lambda x: x["final_score"], reverse=True)
 
     st.header("🏆 Candidate Ranking")
 
-    # -------------------------------
-    # DISPLAY RESULTS
-    # -------------------------------
     for i, c in enumerate(candidates):
 
-        # 🥇 TOP CANDIDATE
         if i == 0:
             st.success(f"🥇 TOP CANDIDATE: {c['name']} (Final Score: {c['final_score']}%)")
         else:
             st.info(f"{i+1}. {c['name']} (Final Score: {c['final_score']}%)")
 
-        # 💡 Skills
         st.write("💡 Skills:", ", ".join(c["skills"]))
 
-        # -------------------------------
-        # 🧠 WHY ANALYSIS
-        # -------------------------------
-        strong = c["skills"][:3]
+        # SMART STRONG SKILLS
+        important_skills = [
+            "python","machine learning","nlp","deep learning",
+            "tensorflow","pytorch","opencv","sql","aws","docker"
+        ]
+
+        strong = [s for s in c["skills"] if s in important_skills][:3]
         missing = c["missing"][:3]
 
         st.write("🧠 Analysis:")
@@ -98,9 +83,7 @@ if uploaded_files:
         if missing:
             st.error("❌ Needs improvement in: " + ", ".join(missing))
 
-        # -------------------------------
-        # 🏆 TOP CANDIDATE INSIGHT
-        # -------------------------------
+        # TOP CANDIDATE INSIGHT
         if i == 0:
             st.subheader("🏆 Why This Candidate Stands Out")
 
@@ -118,17 +101,13 @@ if uploaded_files:
             for r in reasons:
                 st.write("✔", r)
 
-        # -------------------------------
-        # 💡 SUGGESTIONS
-        # -------------------------------
+        # SUGGESTIONS
         if c["suggestions"]:
             st.write("💡 Suggestions:")
             for s in c["suggestions"]:
                 st.warning(s)
 
-        # -------------------------------
-        # 🎯 QUESTIONS
-        # -------------------------------
+        # QUESTIONS
         st.write("🎯 Interview Questions:")
         for q in c["questions"]:
             st.write("-", q)

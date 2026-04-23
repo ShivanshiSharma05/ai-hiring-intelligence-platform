@@ -6,11 +6,11 @@ def generate_questions(skills):
         return ["Tell me about yourself."]
 
     templates = [
-        "How have you applied {skill} in a real-world project?",
-        "Explain a challenging problem you solved using {skill}.",
-        "How would you design a scalable system using {skill}?",
-        "What are best practices when working with {skill}?",
-        "What are common pitfalls in {skill} and how do you avoid them?"
+        "How would you apply {skill} in a real-world production system?",
+        "Explain a project where {skill} improved system performance.",
+        "What challenges have you faced while working with {skill}?",
+        "How do you optimize solutions using {skill}?",
+        "How does {skill} integrate with other technologies in a scalable system?"
     ]
 
     questions = []
