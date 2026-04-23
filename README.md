@@ -122,7 +122,6 @@ PDF Parsing: pdfplumber
 ## 👩‍💻 Author
 
 Shivanshi Sharma
-Aspiring ML Engineer | AI Enthusiast
 
 ---
 
