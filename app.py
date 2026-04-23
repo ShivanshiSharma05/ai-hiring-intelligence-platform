@@ -1,70 +1,69 @@
 import streamlit as st
 from resume_parser import extract_text_from_pdf
 from skill_extractor import extract_skills
-from jd_matcher import match_resume_to_jd
 from question_generator import generate_questions
+from score_calculator import calculate_score
+from jd_matcher import match_resume_to_jd
 from suggestions import get_suggestions
 
 st.set_page_config(page_title="AI Hiring Platform", layout="wide")
 
 st.title("🚀 AI-Powered Hiring Intelligence Platform")
 
-uploaded_files = st.file_uploader(
-    "📄 Upload Multiple Resumes", type=["pdf"], accept_multiple_files=True
-)
-
+uploaded_files = st.file_uploader("📄 Upload Multiple Resumes", type=["pdf"], accept_multiple_files=True)
 jd_text = st.text_area("📄 Paste Job Description")
 
-if uploaded_files and jd_text:
+if uploaded_files:
 
-    results = []
+    candidates = []
 
     for file in uploaded_files:
+
         text = extract_text_from_pdf(file)
         skills = extract_skills(text)
 
-        score, missing = match_resume_to_jd(text, jd_text)
+        score = calculate_score(skills, text)
 
-        results.append({
+        if jd_text:
+            match_score, missing = match_resume_to_jd(text, jd_text)
+        else:
+            match_score, missing = 0, []
+
+        candidates.append({
             "name": file.name,
             "score": score,
+            "match": match_score,
             "skills": skills,
             "missing": missing,
-            "text": text
+            "questions": generate_questions(skills),
+            "suggestions": get_suggestions(skills, text)
         })
 
-    # 🔥 SORT (RANKING)
-    results = sorted(results, key=lambda x: x["score"], reverse=True)
+    # Ranking
+    candidates = sorted(candidates, key=lambda x: x["match"], reverse=True)
 
-    st.subheader("🏆 Candidate Ranking")
+    st.header("🏆 Candidate Ranking")
 
-    for i, res in enumerate(results, 1):
-        st.markdown(f"### {i}. {res['name']} - {res['score']}%")
+    for i, c in enumerate(candidates):
 
-        col1, col2 = st.columns(2)
+        if i == 0:
+            st.success(f"🥇 TOP CANDIDATE: {c['name']} ({c['match']}%)")
 
-        with col1:
-            st.write("💡 Skills:")
-            for skill in res["skills"]:
-                st.success(skill)
+        else:
+            st.info(f"{i+1}. {c['name']} ({c['match']}%)")
 
-        with col2:
-            if res["missing"]:
-                st.write("❌ Missing:")
-                for m in res["missing"]:
-                    st.error(m)
+        st.write("💡 Skills:", ", ".join(c["skills"]))
 
-        # Suggestions
-        suggestions = get_suggestions(res["skills"], res["text"])
-        if suggestions:
+        if c["missing"]:
+            st.write("❌ Missing Skills:", ", ".join(c["missing"]))
+
+        if c["suggestions"]:
             st.write("💡 Suggestions:")
-            for s in suggestions:
+            for s in c["suggestions"]:
                 st.warning(s)
 
-        # Questions
         st.write("🎯 Interview Questions:")
-        questions = generate_questions(res["skills"])
-        for q in questions:
-            st.info(q)
+        for q in c["questions"]:
+            st.write("-", q)
 
-        st.markdown("---")
+        st.divider()

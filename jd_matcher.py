@@ -1,17 +1,16 @@
 import re
 
-# -------------------------------
-# Clean Text
-# -------------------------------
+TECH_SKILLS = {
+    "python","java","c++","sql","machine learning","deep learning",
+    "nlp","tensorflow","pytorch","opencv","data science",
+    "aws","docker","kubernetes","system design","data structures","algorithms"
+}
+
 def clean_text(text):
     text = text.lower()
     text = re.sub(r'[^a-zA-Z0-9 ]', ' ', text)
     return text
 
-
-# -------------------------------
-# Match Resume to JD
-# -------------------------------
 def match_resume_to_jd(resume_text, jd_text):
 
     resume_text = clean_text(resume_text)
@@ -20,20 +19,12 @@ def match_resume_to_jd(resume_text, jd_text):
     resume_words = set(resume_text.split())
     jd_words = set(jd_text.split())
 
-    # Remove useless words
-    stopwords = {
-        "and", "or", "the", "is", "are", "a", "an", "to", "for",
-        "with", "of", "in", "on", "we", "you", "will", "be"
-    }
-
-    jd_keywords = jd_words - stopwords
+    # Only keep TECH words from JD
+    jd_keywords = {word for word in jd_words if word in TECH_SKILLS}
 
     matched = resume_words.intersection(jd_keywords)
     missing = jd_keywords - resume_words
 
-    if len(jd_keywords) == 0:
-        score = 0
-    else:
-        score = int((len(matched) / len(jd_keywords)) * 100)
+    score = int((len(matched) / len(jd_keywords)) * 100) if jd_keywords else 0
 
     return score, sorted(missing)

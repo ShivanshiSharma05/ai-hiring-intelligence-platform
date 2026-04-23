@@ -2,20 +2,22 @@ import random
 
 def generate_questions(skills):
 
-    advanced_patterns = [
-        "Explain a real-world project where you used {}.",
-        "How would you optimize performance using {}?",
-        "What are common challenges in {} and how do you solve them?",
-        "How does {} integrate with other technologies?",
-        "What are best practices when working with {}?",
-        "Compare {} with alternative tools or frameworks.",
-        "How would you design a system using {}?"
+    if not skills:
+        return ["Tell me about yourself."]
+
+    templates = [
+        "How have you applied {skill} in a real-world project?",
+        "Explain a challenging problem you solved using {skill}.",
+        "How would you design a scalable system using {skill}?",
+        "What are best practices when working with {skill}?",
+        "What are common pitfalls in {skill} and how do you avoid them?"
     ]
 
     questions = []
+    selected_skills = skills[:5]
 
-    for skill in skills:
-        questions.append(random.choice(advanced_patterns).format(skill))
+    for skill in selected_skills:
+        q = random.choice(templates).format(skill=skill)
+        questions.append(q)
 
-    random.shuffle(questions)
-    return questions[:5]
+    return questions
