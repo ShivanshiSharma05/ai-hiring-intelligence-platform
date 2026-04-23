@@ -1,130 +1,122 @@
 # 🚀 AI-Powered Hiring Intelligence Platform
 
-An end-to-end AI system that automates resume screening, candidate ranking, and interview preparation using NLP and semantic similarity.
+An intelligent system that helps analyze, rank, and evaluate candidates using AI and NLP techniques.
 
 ---
 
 ## 🧠 Overview
 
-This project simulates a real-world recruiter workflow by analyzing resumes against a job description and generating actionable insights such as:
+This platform simulates a real-world recruiter workflow by automatically screening resumes and generating insights such as:
 
-* Candidate ranking
-* Skill gap analysis
-* Resume improvement suggestions
-* AI-generated interview questions
-
----
-
-## ✨ Key Features
-
-* 📄 Upload and analyze multiple resumes (PDF)
-* 📊 Intelligent resume vs job description matching
-* 🏆 Automated candidate ranking system
-* ❌ Skill gap detection (only relevant technical keywords)
-* 💡 Resume improvement suggestions
-* 🎯 Context-aware interview question generation
-* ⚡ Fast and interactive UI using Streamlit
+- Resume vs Job Description Match Score  
+- Candidate Ranking System  
+- Skill Gap Detection  
+- AI-Based Interview Questions  
+- Resume Improvement Suggestions  
 
 ---
 
-## 🏗️ System Architecture
+## 🔥 Features
 
-1. Resume Parsing → Extract text using pdfplumber
-2. Skill Extraction → Identify technical skills via NLP (spaCy)
-3. Matching Engine:
+### 📄 Resume Processing
+- Upload multiple resumes (PDF)  
+- Extract structured text using NLP  
 
-   * Keyword-based scoring
-   * Semantic similarity using embeddings (sentence-transformers)
-4. Ranking Engine → Sort candidates based on final score
-5. Insight Generation:
+### 📊 Candidate Evaluation
+- Skill extraction from resumes  
+- Resume scoring based on quality and content  
+- Job Description matching using keyword + semantic logic  
 
-   * Missing skills
-   * Suggestions
-   * Interview questions
+### 🏆 Ranking System
+- Ranks candidates based on:
+  - Resume quality  
+  - Job-role alignment  
+
+### ❌ Skill Gap Detection
+- Identifies missing or weak skills compared to JD  
+
+### 🎯 Interview Question Generator
+- Generates role-specific interview questions based on candidate skills  
+
+### 💡 Smart Suggestions
+- Provides actionable improvements:
+  - Add internships  
+  - Add cloud/deployment skills  
+  - Improve project impact  
 
 ---
 
 ## ⚙️ Tech Stack
 
-Frontend: Streamlit
-NLP: spaCy
-Embeddings: Sentence Transformers
-ML Backend: PyTorch
-PDF Parsing: pdfplumber
+- Python  
+- NLP (Text Processing)  
+- Streamlit (Frontend UI)  
+- Machine Learning Concepts  
 
 ---
 
 ## 🚀 Live Demo
 
-(Add your deployed link here after deployment)
+https://ai-hiring-intelligence-platform-vwwwezswyzxhetf75pyvr9.streamlit.app/
 
 ---
 
-## 📦 Installation (Local Setup)
+## 📂 Project Structure
 
-1. Clone Repository
-   git clone https://github.com/yourusername/ai-resume-analyzer.git
-   cd ai-resume-analyzer
-
-2. Create Virtual Environment
-   python -m venv venv
-   venv\Scripts\activate
-
-3. Install Dependencies
-   pip install -r requirements.txt
-
-4. Download NLP Model
-   python -m spacy download en_core_web_sm
-
-5. Run Application
-   streamlit run app.py
+ai-hiring-intelligence-platform/
+│
+├── app.py  
+├── resume_parser.py  
+├── skill_extractor.py  
+├── jd_matcher.py  
+├── question_generator.py  
+├── score_calculator.py  
+├── suggestions.py  
+├── requirements.txt  
 
 ---
 
-## ☁️ Deployment (Streamlit Cloud)
+## 🛠️ Installation
 
-1. Push project to GitHub
-2. Go to Streamlit Cloud
-3. Click New App
-4. Select repository
-5. Set main file: app.py
-6. Deploy
+git clone https://github.com/ShivanshiSharma05/ai-hiring-intelligence-platform.git  
+cd ai-hiring-intelligence-platform  
 
----
+python -m venv venv  
+venv\Scripts\activate  
 
-## ⚠️ Important Notes
-
-* First run may take time due to model download
-* Ensure en_core_web_sm is installed
-* Internet connection required for embedding model
+pip install -r requirements.txt  
+streamlit run app.py  
 
 ---
 
-## 📊 Example Output
+## 🎯 Future Improvements
 
-* Ranked candidates based on relevance
-* Accurate match scores (skill + semantic)
-* Meaningful missing skills (no noise words)
-* Context-based interview questions
-
----
-
-## 🔮 Future Enhancements
-
-* LLM-based question generation (OpenAI / Llama)
-* Resume scoring dashboard for recruiters
-* Candidate analytics & visualization
-* Integration with ATS systems
-* Cloud deployment with Docker
+- Add semantic embeddings (FAISS / vector DB)  
+- Integrate LLM APIs for advanced question generation  
+- Build recruiter dashboard with analytics  
+- Add authentication system  
 
 ---
 
-## 👩‍💻 Author
+## 📌 Key Highlights
 
-Shivanshi Sharma
+- End-to-end AI application (NLP + UI)  
+- Real-world use case (Hiring automation)  
+- Multi-candidate comparison system  
+- Production-ready deployment  
 
 ---
 
-## ⭐ If you found this useful
+## 🤝 Contributing
 
-Give this repo a ⭐ and share your feedback!
+Open to improvements and suggestions  
+
+---
+
+## Author
+
+Shiavnshi Sharma
+
+## ⭐ If you like this project
+
+Give it a star on GitHub ⭐
