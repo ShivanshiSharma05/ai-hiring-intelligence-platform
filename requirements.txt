@@ -1,9 +1,5 @@
 streamlit
 pdfplumber
-spacy
 scikit-learn
 pandas
 numpy
-transformers
-torch
-sentencepiece
